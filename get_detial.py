@@ -30,6 +30,7 @@ def getPage(url):
 		while True:
 			print('get page %d...' % (page))
 			rd = random.randint(0,1)
+			print(rd)
 			if rd == 0:
 				r = requests.get(url, headers=headers)
 			else:
