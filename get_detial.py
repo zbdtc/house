@@ -10,7 +10,10 @@ import random
 
 hrefs = pd.read_csv('58_hrefs.csv',header=None)
 page = 1
-
+proxies = {
+	'http': 'http://127.00.1:8118'
+}
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0'}
 # header = {
 # 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0',
 # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -26,7 +29,11 @@ def getPage(url):
 	try:
 		while True:
 			print('get page %d...' % (page))
-			r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0'})
+			rd = random.randint(0,1)
+			if rd == 0:
+				r = requests.get(url, headers=headers)
+			else:
+				r = requests.get(url, headers=headers, proxies=proxies)
 			print(r.status_code)
 			if r.status_code == 200:
 				page = page+1
@@ -34,7 +41,7 @@ def getPage(url):
 			else:
 				time.sleep(random.uniform(0,5))
 	except Exception as e:
-		print('err', e)
+		print('get html err', e)
 
 	soup = BeautifulSoup(r.content, 'lxml')
 	return soup
@@ -70,7 +77,7 @@ def Crawler(url):
 		row = getDetial(soup, url)
 		return row
 	except Exception as e:
-		print('err!')
+		print('beautiful soup err!')
 		print('reason', e)
 
 List = []
