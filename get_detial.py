@@ -11,9 +11,12 @@ import random
 hrefs = pd.read_csv('58_hrefs.csv',header=None)
 page = 1
 proxies = {
-	'http': 'http://127.00.1:8118'
+	'http': 'http://59.75.217.42:61202'
 }
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0'}
+headers = {
+	'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0',
+	# 'Cookie': 'f=n; id58=c5/nn1q4vdUjSw8PGS9/Ag==; city=nb; 58tj_uuid=412f2b12-d03a-497d-a105-add47cd77816; new_uv=12; bj58_new_uv=2; bj58_id58s="LWNndFk0Q1RHeFE9NjM2OQ=="; 58home=nb; als=0; wmda_uuid=f028c5b0d00be2ae9d24715ff1dddf6f; wmda_new_uuid=1; wmda_visited_projects=%3B2385390625025%3B1409632296065%3B1731918550401%3B1731916484865; xxzl_deviceid=toSIk5uhL3g%2BncbPDeY%2BG%2FslojZETNSlDIY1whpS8ChuhLlOi3ILTuAhnJq0cuZT; Hm_lvt_5bcc464efd3454091cf2095d3515ea05=1525221992; Hm_lvt_b2c7b5733f1b8ddcfc238f97b417f4dd=1525222014; gr_user_id=608665ef-c94e-455e-85f0-763cd4ca434d; myfeet_tooltip=end; commontopbar_myfeet_tooltip=end; commontopbar_new_city_info=135%7C%E5%AE%81%E6%B3%A2%7Cnb; commontopbar_ipcity=nb%7C%E5%AE%81%E6%B3%A2%7C0; f=n; new_session=1; utm_source=; spm=; init_refer=http%253A%252F%252Fnb.58.com%252Fershoufang%252F34103605799227x.shtml; ppStore_fingerprint=F288E5DB4FC9DE1E16D9093A136283A92CCE5E05462AB630%EF%BC%BF1526554956116'
+}
 # header = {
 # 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0',
 # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -29,8 +32,9 @@ def getPage(url):
 	try:
 		while True:
 			print('get page %d...' % (page))
+			# rd = random.randint(0,1)
+			# print(rd)
 			rd = random.randint(0,1)
-			print(rd)
 			if rd == 0:
 				r = requests.get(url, headers=headers)
 			else:
@@ -80,10 +84,10 @@ def Crawler(url):
 	except Exception as e:
 		print('beautiful soup err!')
 		print('reason', e)
+		print(url)
+		time.sleep(random.uniform(5,10))
 
 List = []
-
-
 
 hrefs[0].map(lambda x: List.append(Crawler(x)))
 
